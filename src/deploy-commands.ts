@@ -2,25 +2,26 @@ import { REST, Routes, SlashCommandBuilder } from 'discord.js';
 import 'dotenv/config';
 
 const commands = [
-  new SlashCommandBuilder()
-    .setName('wyr')
-    .setDescription('Get a random “Would You Rather” question'),
-  new SlashCommandBuilder()
-    .setName('clanch')
-    .setDescription('Clan Channel Info'),
-].map(command => command.toJSON());
-
+  {
+    name: 'wyr',
+    description: 'Get a random “Would You Rather” question',
+    type: 1, 
+    integration_types: [1], 
+    contexts: [0, 1], 
+  },
+  {
+    name: 'clanch',
+    description: 'Clan Channel Information',
+    type: 1,
+    integration_types: [1], 
+    contexts: [0, 1],
+  }
+];
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN!);
 
 (async () => {
   try {
-    console.log('Registering guild and global commands…');
-
-    await rest.put(
-      Routes.applicationGuildCommands(process.env.CLIENT_ID!, process.env.GUILD_ID!),
-      { body: commands }
-    );
-    console.log('Guild commands registered.');
+    console.log('Registering commands…');
 
     await rest.put(
       Routes.applicationCommands(process.env.CLIENT_ID!),
