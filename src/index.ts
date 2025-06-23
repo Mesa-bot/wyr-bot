@@ -3,11 +3,7 @@ import { questions } from './questions';
 import 'dotenv/config';
 
 const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.DirectMessages
-  ],
-  partials: [Partials.Channel]
+  intents: []
 });
 
 client.once(Events.ClientReady, () => {
